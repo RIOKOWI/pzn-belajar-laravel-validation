@@ -3,13 +3,14 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use function PHPUnit\Framework\assertTrue;
 
 use function PHPUnit\Framework\assertFalse;
+use Illuminate\Foundation\Testing\WithFaker;
 use function PHPUnit\Framework\assertNotNull;
-use function PHPUnit\Framework\assertTrue;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ValidatorTest extends TestCase
 {
@@ -71,5 +72,26 @@ class ValidatorTest extends TestCase
 
         assertFalse($validator->passes());
         assertTrue($validator->fails());
+    }
+
+    // error message
+    public function testErrorMessage(): void
+    {
+        $data = [
+            'username' => '',
+            'password' => ''
+        ];
+
+        $rules = [
+            'username' => 'required',
+            'password' => 'required'
+        ];
+
+        $validator = Validator::make($data, $rules);
+
+        assertTrue($validator->fails());
+        $message = $validator->getMessageBag();
+
+        Log::info($message->toJson(JSON_PRETTY_PRINT));
     }
 }
