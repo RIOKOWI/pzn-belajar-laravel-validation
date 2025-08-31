@@ -121,4 +121,26 @@ class ValidatorTest extends TestCase
             Log::error($message->toJson(JSON_PRETTY_PRINT));
         };
     }
+
+    // validation rules
+    public function testValidationRules(): void
+    {
+        $data = [
+            'username' => 'rio',
+            'password' => '12345'
+        ];
+
+        $rules = [
+            'username' => 'required|email|max:100',
+            'password' => ['required', 'min:6', 'max:50']
+        ];
+
+        $validator = Validator::make($data, $rules);
+
+        assertTrue($validator->fails());
+        // assertTrue($validator->passes());
+        $message = $validator->getMessageBag();
+
+        Log::info($message->toJson(JSON_PRETTY_PRINT));
+    }
 }

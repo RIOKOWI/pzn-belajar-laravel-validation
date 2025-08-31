@@ -99,3 +99,10 @@ contoh di file :
 
 ValidatorTest.php
 LINE 99-123
+
+## VALIDATION RULES
+
+contoh di file :
+
+ValidatorTest.php
+LINE 125-145
