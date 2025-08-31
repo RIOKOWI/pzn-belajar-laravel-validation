@@ -11,6 +11,7 @@ use function PHPUnit\Framework\assertFalse;
 use Illuminate\Foundation\Testing\WithFaker;
 use function PHPUnit\Framework\assertNotNull;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Validation\ValidationException;
 
 class ValidatorTest extends TestCase
 {
@@ -93,5 +94,31 @@ class ValidatorTest extends TestCase
         $message = $validator->getMessageBag();
 
         Log::info($message->toJson(JSON_PRETTY_PRINT));
+    }
+
+    // validation exception
+    public function testValidationException(): void
+    {
+        $data = [
+            'username' => '',
+            'password' => '12345'
+        ];
+
+        $rules = [
+            'username' => 'required',
+            'password' => 'required'
+        ];
+
+        $validator = Validator::make($data, $rules);
+        self::assertNotNull($validator);
+
+        try{
+            $validator->validate();
+            self::fail('error cuy');
+        }catch (ValidationException $exception){
+            assertNotNull($exception->validator);
+            $message = $exception->validator->errors();
+            Log::error($message->toJson(JSON_PRETTY_PRINT));
+        };
     }
 }

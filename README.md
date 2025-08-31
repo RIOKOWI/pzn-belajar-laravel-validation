@@ -92,3 +92,10 @@ contoh di file :
 
 ValidatorTest.php
 LINE 77-96
+
+## VALIDATION EXCEPTION
+
+contoh di file :
+
+ValidatorTest.php
+LINE 99-123
