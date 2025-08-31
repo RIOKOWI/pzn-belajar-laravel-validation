@@ -106,3 +106,10 @@ contoh di file :
 
 ValidatorTest.php
 LINE 125-145
+
+## VALID DATA
+
+contoh di file :
+
+ValidatorTest.php
+LINE 147-172
