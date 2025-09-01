@@ -113,3 +113,14 @@ contoh di file :
 
 ValidatorTest.php
 LINE 147-172
+
+## VALIDATION MESSAGE
+
+perintah buat folder lang :
+php artisan lang:publish
+
+contoh di file :
+
+ValidatorTest.php
+validation.php
+LINE 176-178
