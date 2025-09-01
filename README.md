@@ -156,3 +156,10 @@ contoh di file :
 
 ValidatorTest.php
 LINE 261-283
+
+## RULE CLASSES
+
+contoh di file :
+
+ValidatorTest.php
+LINE 287-306

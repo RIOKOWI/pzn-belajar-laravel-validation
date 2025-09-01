@@ -18,6 +18,8 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Validation\Validator as ValidationValidator;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\In;
+use Illuminate\Validation\Rules\Password;
 
 class ValidatorTest extends TestCase
 {
@@ -276,6 +278,27 @@ class ValidatorTest extends TestCase
 
         $validator = Validator::make($data, $rules);
         assertTrue($validator->fails());
+
+        $message = $validator->getMessageBag();
+        Log::info($message->toJson(JSON_PRETTY_PRINT));
+
+    }
+
+    //rule classes
+    public function testRuleClasses(){
+        $data = [
+            'username' => 'Embut',
+            'password' => '*123rio',
+        ];
+
+        $rules = [
+            'username' => ['required', new In('Rio', 'Embut', 'Cepong')],
+            'password' => ['required', Password::min(6)->letters()->numbers()->symbols()]
+        ];
+
+        $validator = Validator::make($data, $rules);
+        // assertTrue($validator->fails());
+        assertTrue($validator->passes());
 
         $message = $validator->getMessageBag();
         Log::info($message->toJson(JSON_PRETTY_PRINT));
