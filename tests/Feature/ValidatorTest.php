@@ -335,4 +335,39 @@ class ValidatorTest extends TestCase
         Log::info($message->toJson(JSON_PRETTY_PRINT));
 
     }
+
+    public function testNestedIndexArrayValidation(){
+        $data = [
+            'name' => [
+                'first' => 'rio',
+                'last' => 'achyar',
+            ],
+            'address' => [
+                'street' => 'Taman Merpati',
+                'city' => 'Tangerang',
+                'country' => '',
+            ],
+            'address' => [
+                'street' => 'Boulevard',
+                'city' => 'Tangerang',
+                'country' => 'Indo',
+            ],
+        ];
+
+        $rules = [
+            'name.first' => ['required', 'max:100'],
+            'name.last' => ['max:100'],
+            'address.*.street' => ['required', 'max:200'],
+            'address.*.city' => ['required', 'max:150'],
+            'address.*.country' => ['required', 'max:100'],
+        ];
+
+        $validator = Validator::make($data, $rules);
+        assertTrue($validator->fails());
+        // assertTrue($validator->passes());
+
+        $message = $validator->getMessageBag();
+        Log::info($message->toJson(JSON_PRETTY_PRINT));
+
+    }
 }
