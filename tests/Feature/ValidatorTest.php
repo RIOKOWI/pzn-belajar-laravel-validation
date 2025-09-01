@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Rules\RegistrationRule;
 use App\Rules\Uppercase;
+use Closure;
 use Tests\TestCase;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
@@ -238,7 +239,7 @@ class ValidatorTest extends TestCase
     }
 
     //custom rule
-    public function testCustomeRule(){
+    public function testCustomRule(){
         $data = [
             'username' => 'RIORIO',
             'password' => 'RIORIO',
@@ -247,6 +248,30 @@ class ValidatorTest extends TestCase
         $rules = [
             'username' => ['required','max:100', new Uppercase()],
             'password' => ['required', 'min:6', 'max:50', new RegistrationRule()] // data aware & validation aware
+        ];
+        
+        $validator = Validator::make($data, $rules);
+        assertTrue($validator->fails());
+        
+        $message = $validator->getMessageBag();
+        Log::info($message->toJson(JSON_PRETTY_PRINT));
+
+    }
+
+    //custom function rule
+    public function testCustomFunctionRule(){
+        $data = [
+            'username' => 'nonon',
+            'password' => '123456',
+        ];
+
+        $rules = [
+            'username' => ['required','max:100', function(string $attribute, string $value, Closure $fail){
+                if($value != strtoupper($value)){
+                    $fail("$attribute ($value) harus UPPERCASE ATAU KAPITAL");
+                };
+            }],
+            'password' => ['required', 'min:6', 'max:50', new RegistrationRule()] 
         ];
 
         $validator = Validator::make($data, $rules);

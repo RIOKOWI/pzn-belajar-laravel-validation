@@ -149,3 +149,10 @@ ValidatorTest.php
 validation\en.php
 LINE 240-258
 LINE 160
+
+## CUSTOM FUNCTION RULE
+
+contoh di file :
+
+ValidatorTest.php
+LINE 261-283
