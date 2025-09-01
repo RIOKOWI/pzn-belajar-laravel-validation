@@ -145,7 +145,7 @@ class ValidatorTest extends TestCase
         Log::info($message->toJson(JSON_PRETTY_PRINT));
     }
 
-    // valid data & error message
+    // valid data & validation message
     public function testValidData(): void
     {
         App::setlocale('id');
@@ -161,6 +161,40 @@ class ValidatorTest extends TestCase
         ];
 
         $validator = Validator::make($data, $rules);
+        self::assertNotNull($validator);
+
+        try{
+            $valid = $validator->validate();
+            Log::info(json_encode($valid, JSON_PRETTY_PRINT));
+        }catch (ValidationException $exception){
+            assertNotNull($exception->validator);
+            $message = $exception->validator->errors();
+            Log::error($message->toJson(JSON_PRETTY_PRINT));
+        };
+    }
+
+    // validation message (inline message)
+    public function testValidationMessage(): void
+    {
+        $data = [
+            'username' => 'ygyfb',
+            'password' => '12345',
+            'admin' => true
+        ];
+
+        $rules = [
+            'username' => 'required|email|max:100',
+            'password' => ['required', 'min:6', 'max:50']
+        ];
+
+        $messages = [
+            'required' => ':attribute harus diisi',
+            'email' => ':attribute harus pakai karakter @gmail.com',
+            'min' => ':attribute minimal :min karakter',
+            'max' => ':attribute maximal :max karakter',
+        ];
+
+        $validator = Validator::make($data, $rules, $messages);
         self::assertNotNull($validator);
 
         try{
