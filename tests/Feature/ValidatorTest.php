@@ -5,14 +5,16 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 
+use function Laravel\Prompts\error;
 use function PHPUnit\Framework\assertTrue;
 use function PHPUnit\Framework\assertFalse;
 use Illuminate\Foundation\Testing\WithFaker;
 use function PHPUnit\Framework\assertNotNull;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Validation\Validator as ValidationValidator;
+use Illuminate\Support\Facades\Validator;
 
 class ValidatorTest extends TestCase
 {
@@ -205,5 +207,31 @@ class ValidatorTest extends TestCase
             $message = $exception->validator->errors();
             Log::error($message->toJson(JSON_PRETTY_PRINT));
         };
+    }
+
+    //additional validation
+    public function testAdditionalValidation()
+    {
+        $data = [
+            'username' => 'rio@gmail.com',
+            'password' => 'rio@gmail.com',
+        ];
+
+        $rules = [
+            'username' => 'required|email|max:100',
+            'password' => ['required', 'min:6', 'max:50']
+        ];
+
+        $validator = Validator::make($data, $rules);
+        $validator->after(function(ValidationValidator $validator){
+            $data = $validator->getData();
+            if($data['username'] == $data['password']){
+                $validator->errors()->add('password', 'password dan username tidak boleh mengandung kata yang sama');
+            };
+        });
+
+        assertFalse($validator->passes());
+        $message = $validator->getMessageBag();
+        Log::info($message->toJson(JSON_PRETTY_PRINT));
     }
 }
