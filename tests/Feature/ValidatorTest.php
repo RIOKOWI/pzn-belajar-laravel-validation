@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Rules\Uppercase;
 use Tests\TestCase;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
@@ -233,5 +234,25 @@ class ValidatorTest extends TestCase
         assertFalse($validator->passes());
         $message = $validator->getMessageBag();
         Log::info($message->toJson(JSON_PRETTY_PRINT));
+    }
+
+    //custom rule
+    public function testCustomeRule(){
+        $data = [
+            'username' => 'rio aja',
+            'password' => '123456',
+        ];
+
+        $rules = [
+            'username' => ['required','max:100', new Uppercase()],
+            'password' => ['required', 'min:6', 'max:50']
+        ];
+
+        $validator = Validator::make($data, $rules);
+        assertTrue($validator->fails());
+
+        $message = $validator->getMessageBag();
+        Log::info($message->toJson(JSON_PRETTY_PRINT));
+
     }
 }

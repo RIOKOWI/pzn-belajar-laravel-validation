@@ -134,3 +134,15 @@ contoh di file :
 
 ValidatorTest.php
 LINE 212-236
+
+## CUSTOM RULE
+
+perintah buat rule :
+php artisan make:rule NamaRule
+
+contoh di file :
+
+Uppercase.php
+
+ValidatorTest.php
+LINE 212-236
