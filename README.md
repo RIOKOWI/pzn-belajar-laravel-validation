@@ -145,4 +145,6 @@ contoh di file :
 Uppercase.php
 
 ValidatorTest.php
+validation\en.php
 LINE 212-236
+LINE 160

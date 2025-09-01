@@ -15,7 +15,10 @@ class Uppercase implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if($value !== strtoupper($value)){
-            $fail("input $attribute nya harus UPPERCASE atau KAPITAL ya dekku!!");
+            $fail('validation.custom.uppercase')->translate([ // transaltion
+                'attribute' => $attribute,
+                'value' => $value,
+            ]);
         }
     }
 }
