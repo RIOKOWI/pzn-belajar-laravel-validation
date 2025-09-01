@@ -3,15 +3,16 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use function PHPUnit\Framework\assertTrue;
 
+use function PHPUnit\Framework\assertTrue;
 use function PHPUnit\Framework\assertFalse;
 use Illuminate\Foundation\Testing\WithFaker;
 use function PHPUnit\Framework\assertNotNull;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ValidatorTest extends TestCase
 {
@@ -144,12 +145,13 @@ class ValidatorTest extends TestCase
         Log::info($message->toJson(JSON_PRETTY_PRINT));
     }
 
-    // valid data
+    // valid data & error message
     public function testValidData(): void
     {
+        App::setlocale('id');
         $data = [
-            'username' => 'ygy@gmail.com',
-            'password' => '123456',
+            'username' => 'ygyfb',
+            'password' => '12345',
             'admin' => true
         ];
 
