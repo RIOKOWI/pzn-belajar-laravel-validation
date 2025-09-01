@@ -143,8 +143,9 @@ php artisan make:rule NamaRule
 contoh di file :
 
 Uppercase.php
+RegistrationRule.php
 
 ValidatorTest.php
 validation\en.php
-LINE 212-236
+LINE 240-258
 LINE 160

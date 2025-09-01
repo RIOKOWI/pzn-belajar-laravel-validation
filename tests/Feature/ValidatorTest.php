@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Rules\RegistrationRule;
 use App\Rules\Uppercase;
 use Tests\TestCase;
 use Illuminate\Support\Facades\App;
@@ -239,13 +240,13 @@ class ValidatorTest extends TestCase
     //custom rule
     public function testCustomeRule(){
         $data = [
-            'username' => 'rio aja',
-            'password' => '123456',
+            'username' => 'RIORIO',
+            'password' => 'RIORIO',
         ];
 
         $rules = [
             'username' => ['required','max:100', new Uppercase()],
-            'password' => ['required', 'min:6', 'max:50']
+            'password' => ['required', 'min:6', 'max:50', new RegistrationRule()] // data aware & validation aware
         ];
 
         $validator = Validator::make($data, $rules);
