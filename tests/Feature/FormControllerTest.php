@@ -11,6 +11,7 @@ class FormControllerTest extends TestCase
     /**
      * A basic feature test example.
      */
+    // htttp request validation
     public function testLoginFailed(): void
     {
         $response = $this->post('form/login', [
@@ -24,6 +25,27 @@ class FormControllerTest extends TestCase
     public function testLoginSuccess(): void
     {
         $response = $this->post('form/login', [
+            'username' => 'rio',
+            'password' => 'mbut'
+        ]);
+    
+        $response->assertStatus(200);
+    }
+
+    //error page
+    public function testFormError(): void
+    {
+        $response = $this->post('/form', [
+            'username' => '',
+            'password' => ''
+        ]);
+
+        $response->assertStatus(302);
+    }
+    
+    public function testFormSuccess(): void
+    {
+        $response = $this->post('/form', [
             'username' => 'rio',
             'password' => 'mbut'
         ]);

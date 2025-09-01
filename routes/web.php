@@ -18,4 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// htttp request validation
 Route::post('form/login', [FormController::class, 'login']);
+
+//error page
+Route::get('/form', [FormController::class, 'form']);
+Route::post('/form', [FormController::class, 'submitForm']);

@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 
 class FormController extends Controller
 {
+    // htttp request validation
     public function login(Request $request): Response
     {
         try {
@@ -16,10 +17,26 @@ class FormController extends Controller
                 'password' => 'required',
             ];
             $data = $request->validate($rules);
-
+            
             return response('OK', Response::HTTP_OK);
         } catch (ValidationException $exception) {
             return response($exception->errors(), Response::HTTP_BAD_REQUEST);
         };
+    }
+    
+    // error page
+    public function form(): Response
+    {
+        return response()->view('form');
+    }
+    
+    public function submitForm(Request $request): Response
+    {
+        $data = $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        return response('OK', Response::HTTP_OK);
     }
 }
