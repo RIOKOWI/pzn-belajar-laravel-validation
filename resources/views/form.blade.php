@@ -17,10 +17,10 @@
 
     <form action="/form" method="post">
         @csrf
-        {{-- error directive --}}
-        <label>username : @error('username') {{ $message }}@enderror <input type="text" name="username"></label> 
+        {{-- error directive & repopulating forms--}}
+        <label>username : @error('username') {{ $message }}@enderror <input type="text" name="username" value="{{ old('username') }}"></label> 
         <br>
-        <label>password : @error('password') {{ $message }}@enderror <input type="password" name="password"></label>
+        <label>password : @error('password') {{ $message }}@enderror <input type="password" name="password" value="{{ old('password') }}"></label>
         <br>
         <input type="submit" value="login">
     </form>
