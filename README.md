@@ -194,3 +194,10 @@ FormControllerTest.php
 LINE 26-40
 LINE 24-26
 LINE 34-53
+
+## ERROR DIRECTIVE
+
+contoh di file :
+
+formblade.php
+LINE 20-23
