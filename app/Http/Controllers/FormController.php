@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class FormController extends Controller
@@ -34,7 +35,8 @@ class FormController extends Controller
     public function submitForm(LoginRequest $request): Response
     {
         $data = $request->validated();
-
+        // prepared and passed validation
+        Log::info(json_encode($request->all(), JSON_PRETTY_PRINT));
         return response('OK', Response::HTTP_OK);
     }
 }

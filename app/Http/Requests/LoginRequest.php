@@ -21,4 +21,18 @@ class LoginRequest extends FormRequest
             'password' => ['required', Password::min(6)->letters()->numbers()->symbols()]
         ];
     }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'username' => strtolower($this->input('username'))
+        ]);
+    }
+
+    protected function passedValidation(): void
+    {
+        $this->merge([
+            'password' => bcrypt($this->input('password'))
+        ]);
+    }
 }

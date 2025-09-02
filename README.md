@@ -216,5 +216,7 @@ contoh di file :
 perintah buat form request :
 php artisan make:request NamaFormRequest
 
-formblade.php
-LINE 20-23
+LoginRequest.php
+
+FormControllerTest.php
+LINE 38-39
