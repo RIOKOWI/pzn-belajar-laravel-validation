@@ -208,3 +208,13 @@ contoh di file :
 
 formblade.php
 LINE 20-23
+
+## CUSTOM REQUEST
+
+contoh di file :
+
+perintah buat form request :
+php artisan make:request NamaFormRequest
+
+formblade.php
+LINE 20-23
